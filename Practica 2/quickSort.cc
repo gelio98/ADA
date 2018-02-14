@@ -108,6 +108,7 @@ main(void){
 	float time = 0;
 	int prueba = 0;
 	int *aux;
+	double pasos1,pasos2,pasos3,pasos4 = 0;
   
 	size_t size;
 
@@ -116,7 +117,7 @@ main(void){
 	cout << "QUICKSORT VERSUS HEAPSORT" << endl;
 	cout << "Average processing Msteps(million of program steps" << endl;
 	cout<< "Number os samples(arrays of integer): 30" << endl;
-	cout<< "          " << "RANDOM ARRAYS      SORTED ARRAYS      REVERSER SORTED ARRAYS" << endl;
+	cout<< "          " << "RANDOM ARRAYS      SORTED ARRAYS      REVERSE SORTED ARRAYS" << endl;
 	cout << "       ------------------  -----------------  ------------------------" << endl;
 	cout	<< "Size  QuickSort HeapSort  QuickSort HeapSort     QuickSort HeapSort"<< endl;
 	cout << "====================================================================================" << endl;
@@ -140,24 +141,42 @@ main(void){
 
 
 			middle_QuickSort(v,0,size-1);
+
+
 			heapSort(aux,size);
-			
 
+			pasos1 = pasos1 + _STEPS_Q;
+			pasos2 = pasos2 + _STEPS_H;
 			
-
 			//comprueba que esté bien ordenado
 			for (size_t i = 1; i < size; i++)
 				if (v[i] < v[i-1]){ 
 					cerr << "Panic, array not sorted! " << i << endl; 
 					exit(1);			
 				}
+
+			_STEPS_Q = 0;
+			_STEPS_H = 0;
+			middle_QuickSort(v,0,size-1);
+			heapSort(aux,size);
+
+			pasos3 = pasos3 + _STEPS_Q;
+			pasos4 = pasos4 + _STEPS_H;
+
+			_STEPS_Q = 0;
+			_STEPS_H = 0;
+
 		}	
 			cout.setf( ios::fixed );
 			cout << size << "\t" << std::flush;
-			cout << fixed << setprecision(3) << _STEPS_Q/30/1000000 << "\t" << fixed << setprecision(3) << _STEPS_H/30/1000000 <<endl;
+			cout << setw(11) << fixed << setprecision(3) << pasos1/30/1000000 << setw(11) << fixed << setprecision(3) << pasos2/30/1000000 << "\t" << "  " << fixed << setprecision(3) << pasos3/30/1000000 << "\t" << fixed << setprecision(3) << pasos4/30/1000000 <<endl;
 			
 			_STEPS_H = 0;
 			_STEPS_Q = 0;
+			pasos1 = 0;
+			pasos2 = 0;
+			pasos3 = 0;
+			pasos4 = 0;
 			//reseteamos el tiempo para el siguiente array
 			delete v; 
 		}
