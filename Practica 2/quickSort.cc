@@ -12,35 +12,37 @@ Práctica 1: Análisis empírico de la complejidad temporal promedio del algorit
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
+#include <bits/stdc++.h>
 
 
 using namespace std;
 
 
-int _STEPS_ = 0;
+double _STEPS_Q = 0;
+double _STEPS_H = 0;
 
 //--------------------------------------------------------------
 // Middle Quick Sort
 void 
 middle_QuickSort(int * v, long left, long right){
 long i,j;
-int pivot;
- _STEPS_++; //A
- if (left<right){ //A
-   i=left; j=right;//a
-   pivot=v[(i+j)/2]; //a
-		do{
-		  _STEPS_++; //B
-		  while (v[i]<pivot) _STEPS_++; i++;
-		  while (v[j]>pivot)_STEPS_++; j--;
-			if (i<=j){ //B
-				swap(v[i], v[j]);
-				i++; j--;
-			}
-		}while (i<=j); //B
-		if (left < j)  middle_QuickSort(v,left,j);
-		if (i < right) middle_QuickSort(v,i,right);
-	}
+int pivot,aux; 
+_STEPS_Q++; //A
+  if (left<right){
+	i=left; j=right;
+	pivot=v[(i+j)/2];
+	do{
+		_STEPS_Q++; //A
+		while (v[i]<pivot){ _STEPS_Q++;  i++;}
+		while (v[j]>pivot) {_STEPS_Q++;  j--;}
+		if (i<=j) {
+		  aux=v[i]; v[i]=v[j]; v[j]=aux;
+		  i++; j--;
+		}
+	}while (i<=j);
+	if (left<j)  middle_QuickSort(v,left,j);
+	if (i<right) middle_QuickSort(v,i,right);
+  }
 }
 
 //--------------------------------------------------------------                
@@ -54,7 +56,7 @@ size_t largest;
 size_t l, r; //left and right child
 
 do{
-  _STEPS_++;
+  _STEPS_H++;
    	largest = i;  // Initialize largest as root
     l = 2*i + 1;  // In a heap, left child (if exists) of node i is at (2*i + 1) position
     r = 2*i + 2;  // right child (if exists) of node i is at (2*i + 2) position
@@ -82,7 +84,7 @@ void heapSort(int *v, size_t n)
 {
     // Build heap with the input array
     for (size_t i = n / 2 - 1; i >= 0; i--){
-      _STEPS_++;
+      _STEPS_H++;
         sink(v, n, i);
 		if (i==0) break; //as size_t is unsigned type
 	}	
@@ -90,7 +92,7 @@ void heapSort(int *v, size_t n)
     // One by one extract the first element, which is the largest, swap it with the last element of the vector and rebuild heap by sinking the new placed element on the begin of vector.  
     for (size_t i=n-1; i>0; i--)
     {
-      _STEPS_++;
+      _STEPS_H++;
         // Move current root to the end.
         swap(v[0], v[i]);
  		//Now largest element is at the end but do not know if the first element is well placed, so sink process is required
@@ -104,42 +106,41 @@ main(void){
 
 	int * v;
 	float time = 0;
+	int prueba = 0;
+	int *aux;
   
 	size_t size;
 
 	srand(getpid());
 
-	cout << "QUICKSORT VERSUS HEAPSORT"
-		<< endl
-		<< "Average processing Msteps(million of program steps"
-		<< endl
-		<< "Number os samples(arrays of integer): 30"
-		<< endl
-		<< "          "
-		<< "RANDOM ARRAYS \t SORTED ARRAYS \t        REVERSER SORTED ARRAYS"
-		<< endl
-		<< "       ------------------ \t --------------------- \t ------------------------"
+	cout << "QUICKSORT VERSUS HEAPSORT" << endl;
+	cout << "Average processing Msteps(million of program steps" << endl;
+	cout<< "Number os samples(arrays of integer): 30" << endl;
+	cout<< "          " << "RANDOM ARRAYS      SORTED ARRAYS      REVERSER SORTED ARRAYS" << endl;
+	cout << "       ------------------  -----------------  ------------------------" << endl;
+	cout	<< "Size  QuickSort HeapSort  QuickSort HeapSort     QuickSort HeapSort"<< endl;
+	cout << "====================================================================================" << endl;
 
-		<< endl
-		<< "Size \t  QuickSort HeapSort \t QuickSort HeapSort \t QuickSort HeapSort"
-		<< endl
-		<< "======================================================================"
-		<< endl;
 
-	for (int exp = 15; exp <= 23; exp++){
+	for (int exp = 15; exp <= 22; exp++){
 		
 		size = (size_t) powl(2,exp);
 		v = new int [size];
+		aux = new int[size];
 
 		//si se crea la matriz
 		if (v){
 			for(int i = 0; i < 30;i++){
 			// relleno la matriz
-			for (size_t j = 0; j < size; j++) 
-				v[j] = rand(); 
+			for (size_t j = 0; j < size; j++){
+				v[j] = rand();
+				aux[j] = v[j];
+			}
 
-			
+
+
 			middle_QuickSort(v,0,size-1);
+			heapSort(aux,size);
 			
 
 			
@@ -150,12 +151,14 @@ main(void){
 					cerr << "Panic, array not sorted! " << i << endl; 
 					exit(1);			
 				}
-		}
-			cout << size << "\t\t" << std::flush;
+		}	
+			cout.setf( ios::fixed );
+			cout << size << "\t" << std::flush;
+			cout << fixed << setprecision(3) << _STEPS_Q/30/1000000 << "\t" << fixed << setprecision(3) << _STEPS_H/30/1000000 <<endl;
 			
-
+			_STEPS_H = 0;
+			_STEPS_Q = 0;
 			//reseteamos el tiempo para el siguiente array
-			time = 0.0;
 			delete v; 
 		}
 
