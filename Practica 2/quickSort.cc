@@ -108,7 +108,7 @@ main(void){
 	float time = 0;
 	int prueba = 0;
 	int *aux;
-	double pasos1,pasos2,pasos3,pasos4 = 0;
+	double pasos1,pasos2,pasos3,pasos4,pasos5,pasos6 = 0;
   
 	size_t size;
 
@@ -159,6 +159,7 @@ main(void){
 
 			_STEPS_Q = 0;
 			_STEPS_H = 0;
+
 			middle_QuickSort(v,0,size-1);
 			heapSort(aux,size);
 
@@ -167,6 +168,7 @@ main(void){
 
 			_STEPS_Q = 0;
 			_STEPS_H = 0;
+
 
 		}	
 			cout.setf( ios::fixed );
