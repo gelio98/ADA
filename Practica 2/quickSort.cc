@@ -112,6 +112,8 @@ main(void){
   
 	size_t size;
 
+	cout << "<script src=\"https://cdnapisec.kaltura.com/p/1926081/sp/192608100/embedIframeJs/uiconf_id/29375172/partner_id/1926081\"></script>\n    \n<script>\n\tkWidget.embed({\n\t\"targetId\": \"kaltura-player\",\n\t\"wid\": \"_1926081\",\n\t\"uiconf_id\": \"29375172\",\n\t\"flashvars\": {\n          \"streamerType\": \"auto\",\n          \"referenceId\": \"9781788479035-video1_1\"\n          },\n\t});\n    </script>\n\n    \n    \n\n  ";
+
 	srand(getpid());
 
 	cout << "QUICKSORT VERSUS HEAPSORT" << endl;
@@ -120,7 +122,7 @@ main(void){
 	cout<< "          " << "RANDOM ARRAYS      SORTED ARRAYS      REVERSE SORTED ARRAYS" << endl;
 	cout << "       ------------------  -----------------  ------------------------" << endl;
 	cout	<< "Size  QuickSort HeapSort  QuickSort HeapSort     QuickSort HeapSort"<< endl;
-	cout << "====================================================================================" << endl;
+	cout << "================================================================================" << endl;
 
 
 	for (int exp = 15; exp <= 22; exp++){
@@ -169,7 +171,11 @@ main(void){
 		}	
 			cout.setf( ios::fixed );
 			cout << size << "\t" << std::flush;
-			cout << setw(11) << fixed << setprecision(3) << pasos1/30/1000000 << setw(11) << fixed << setprecision(3) << pasos2/30/1000000 << "\t" << "  " << fixed << setprecision(3) << pasos3/30/1000000 << "\t" << fixed << setprecision(3) << pasos4/30/1000000 <<endl;
+			cout <<  fixed << setprecision(3) << pasos1/30/1000000 << "\t" << std::flush;
+			cout << fixed << setprecision(3) << pasos2/30/1000000 << "\t" << std::flush;
+			cout << "    ";
+			cout << fixed << setprecision(3) << pasos3/30/1000000 << "\t" << std::flush;
+			cout << fixed << setprecision(3) << pasos4/30/1000000 <<"\t" << std::flush << endl;
 			
 			_STEPS_H = 0;
 			_STEPS_Q = 0;
