@@ -109,6 +109,8 @@ main(void){
 	int prueba = 0;
 	int *aux;
 	double pasos1,pasos2,pasos3,pasos4,pasos5,pasos6 = 0;
+
+	double aux1, aux2;
   
 	size_t size;
 
@@ -117,9 +119,9 @@ main(void){
 	cout << "QUICKSORT VERSUS HEAPSORT" << endl;
 	cout << "Average processing Msteps(million of program steps" << endl;
 	cout<< "Number os samples(arrays of integer): 30" << endl;
-	cout<< "          " << "RANDOM ARRAYS      SORTED ARRAYS      REVERSE SORTED ARRAYS" << endl;
-	cout << "       ------------------  -----------------  ------------------------" << endl;
-	cout	<< "Size  QuickSort HeapSort  QuickSort HeapSort     QuickSort HeapSort"<< endl;
+	cout<< "          " << "RANDOM ARRAYS      SORTED ARRAYS       REVERSE SORTED ARRAYS" << endl;
+	cout << "       ------------------  -----------------         ------------------------" << endl;
+	cout	<< "Size  QuickSort HeapSort   QuickSort   HeapSort     QuickSort HeapSort"<< endl;
 	cout << "================================================================================" << endl;
 
 
@@ -167,15 +169,34 @@ main(void){
 			_STEPS_Q = 0;
 			_STEPS_H = 0;
 
+			//invertimos la raiz 
+			for(size_t i = 0; i < size/2;i++){
+				aux1= v[i];
+				aux2 = v[size -i -1];
+
+				v[i] = aux2;
+				v[size - i - 1] = aux1;
+				aux[i] = aux2;
+				aux[size - i - 1] = aux1;
+
+			}
+
+			middle_QuickSort(v,0,size-1);
+			heapSort(aux,size);
+
+			pasos5 = pasos5 + _STEPS_Q;
+			pasos6 = pasos6 + _STEPS_H;
+
+			_STEPS_Q = 0;
+			_STEPS_H = 0;
+
 
 		}	
-			
+			pasos1 = pasos1/30/1000000;
 			cout << size << "\t";
-			cout <<  fixed << setprecision(3) << pasos1/30/1000000 << "\t";
-			cout << fixed << setprecision(3) << pasos2/30/1000000 << "\t";
-			cout << " ";
-			cout << " ";
-			cout << fixed << setprecision(3) << pasos3/30/1000000 << "\t";
+			cout  << setprecision(3) << pasos1 << "\t";
+			cout << fixed << setprecision(3) << pasos2/30/1000000 << "\t" << "    ";
+			cout << fixed << setprecision(3) << pasos3/30/1000000 << "  \t";
 			cout << fixed << setprecision(3) << pasos4/30/1000000 <<"\t" << endl;
 			
 			_STEPS_H = 0;
