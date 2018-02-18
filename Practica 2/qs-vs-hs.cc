@@ -1,8 +1,6 @@
 /*
 Jose Antonio Juan Prado 48787664H
 Análsis y diseño de algoritmos.
-Práctica 1: Análisis empírico de la complejidad temporal promedio del algoritmo de ordenación Quicksort central
-
 */
 
 //--------------------------------------------------------------
@@ -199,14 +197,7 @@ main(void){
 			pasos5 = pasos5/30/1000000;
 			pasos6 = pasos6/30/1000000;
 
-			/*cout << size;
-			cout  << setw(9) << setprecision(3) << pasos1;
-			cout <<  setw(10) << setprecision(3) << pasos2;
-			cout << setw(10) <<setprecision(3) << pasos3 << "	";
-			cout  << fixed << setprecision(3) << pasos4<< setw(10);
-			cout  << fixed << setprecision(3) << pasos5 << setw(10);
-			cout  << setprecision(3) << pasos6<< endl;
-	*/
+			
 			cout << size << '\t';
 			std::cout << std::setprecision(3) << pasos1 << '\t';
   			std::cout << std::setprecision(3) << pasos2 <<'\t';
